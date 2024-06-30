@@ -1,68 +1,40 @@
-
 MODEL:
   STRUCTURE:
-#    FINAL_CONV_KERNEL: 1
-#    PRETRAINED_LAYERS: [ '*' ]
-    STEM_CHANNELS: 64
+    STEM_CHANNELS: [ 64 ]
     STAGE1:
-      NUM_MODULES: 1
-      NUM_BRANCHES: 1
+      MODULE_NUM: 1
+      BRANCH_NUM: 1
       BLOCK: BASIC
-      NUM_BLOCKS:
-        - 4
-      NUM_CHANNELS:
-        - 64
-      FUSE_METHOD: SUM
+      BLOCK_NUM: [ 4 ]
+      NUM_CHANNELS: [ 64 ]
+
     STAGE2:
-      NUM_MODULES: 1
-      NUM_BRANCHES: 2
+      MODULE_NUM: 1
+      BRANCH_NUM: 2
       BLOCK: BASIC
-      NUM_BLOCKS:
-        - 4
-        - 4
-      NUM_CHANNELS:
-        - 32
-        - 64
-      FUSE_METHOD: SUM
+      BLOCK_NUM: [ 4,4 ]
+      NUM_CHANNELS: [ 32,64 ]
     STAGE3:
-      NUM_MODULES: 4
-      NUM_BRANCHES: 3
+      MODULE_NUM: 4
+      BRANCH_NUM: 3
       BLOCK: BASIC
-      NUM_BLOCKS:
-        - 4
-        - 4
-        - 4
-      NUM_CHANNELS:
-        - 32
-        - 64
-        - 128
-      FUSE_METHOD: SUM
+      BLOCK_NUM: [ 4,4,4 ]
+      NUM_CHANNELS: [ 32,64,128 ]
     STAGE4:
-      NUM_MODULES: 3
-      NUM_BRANCHES: 4
+      MODULE_NUM: 3
+      BRANCH_NUM: 4
       BLOCK: BASIC
-      NUM_BLOCKS:
-        - 4
-        - 4
-        - 4
-        - 4
-      NUM_CHANNELS:
-        - 32
-        - 64
-        - 128
-        - 256
-      FUSE_METHOD: SUM
-    DECONV:
-      NUM_DECONVS: 1
-      NUM_CHANNELS:
-        - 32
-      KERNEL_SIZE:
-        - 4
-      NUM_BASIC_BLOCKS: 4
-      CAT_OUTPUT:
-        - True
+      BLOCK_NUM: [ 4,4,4,4 ]
+      NUM_CHANNELS: [ 32,64,128,256 ]
+    CAT:
+      BLOCK: BASIC
+      NUM_CHANNELS: 32
+    SEG_HEAD:
+      BLOCK: BASIC
+      CLASS_NUM: 2
+    KPT_HEAD:
+      BLOCK: BASIC
+      KPT_NUM: 6
+
   INIT_WEIGHTS: True
-  NAME: pose_higher_hrnet
-  NUM_JOINTS: 17
-  PRETRAINED: 'models/pytorch/imagenet/hrnet_w32-36af842e.pth'
-  TAG_PER_JOINT: True
+  PRETRAINED: ''
